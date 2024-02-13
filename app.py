@@ -7,8 +7,11 @@ import numpy as np
 # Configuração da página
 
 # SIDEBAR
-st.sidebar.header('Base Potencial FULL IoT')
-st.sidebar.subheader('Filtros')
+
+with st.sidebar:
+    st.markdown("<h1 style='text-align: center; color: black;'>Base Potencial</h1>", unsafe_allow_html=True)
+    st.image('full_IoT_site.png')
+    st.subheader('Filtros')
 
 ufs = ['TODOS', 'AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'EX', 'GO', 'MA',
        'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR', 'RJ', 'RN', 'RO',
@@ -76,21 +79,41 @@ df_filtered = df_filtered.drop('index', axis=1)
 
 st.title('📊 Full IoT - Base Potencial')
 
+df_filtered.capital_social = df_filtered.capital_social.astype('int64')
 # COLUNAS
-st.title('KPI Metrics')
+st.subheader('KPI Metrics')
 a1, a2 = st.columns(2)
 vol_total = len(df_filtered)
-med_cap_social = df_filtered.capital_social.mean()
+med_cap_social = int(df_filtered.capital_social.mean())
 with a1:
     # st.markdown('### Total')
     a1.metric("Vol. Total", vol_total)
 
 with a2:
     # st.markdown('### Total')
-    a2.metric("Média Capital Social", round(med_cap_social,2))
+    a2.metric("Média Capital Social", f"{med_cap_social:,d}")
 
+
+
+
+st.divider()
 # BASE POTENCIAL
+st.subheader('Amostra da Base Potencial (até 10 linhas)')
 st.dataframe(df_filtered.head(10))
+
+@st.cache_data
+def convert_df(df):
+    # IMPORTANT: Cache the conversion to prevent computation on every rerun
+    return df.to_csv().encode('utf-8')
+
+csv = convert_df(df_filtered)
+
+st.download_button(
+    label="Download Dados Filtrados Totais",
+    data=csv,
+    file_name='dados-filtrados-totais.csv',
+    mime='text/csv',
+)
 
 # dynamic_filters.display_df()
 
@@ -99,6 +122,6 @@ st.dataframe(df_filtered.head(10))
 # df.cnpj = df.cnpj.astype(str)
 # # df.telefone1 = df.telefone1.astype(str)
 # df.data_inicio_atividades = df.data_inicio_atividades.astype(str)
-# df.capital_social = df.capital_social.astype(str)
+
 # df.info()
 # st.write(df.head(10)) 
