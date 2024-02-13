@@ -80,6 +80,9 @@ df_filtered = df_filtered.drop('index', axis=1)
 st.title('📊 Full IoT - Base Potencial')
 
 df_filtered.capital_social = df_filtered.capital_social.astype('int64')
+df_filtered.data_inicio_atividades = df_filtered.data_inicio_atividades.astype(str)
+df_filtered.telefone1 = df_filtered['telefone1'].astype(str)
+df_filtered.telefone1 = df_filtered['telefone1'].str.replace('.0','')
 # COLUNAS
 st.subheader('KPI Metrics')
 a1, a2 = st.columns(2)
@@ -120,8 +123,8 @@ st.download_button(
 # st.write(df.head(10)) 
 
 # df.cnpj = df.cnpj.astype(str)
-# # df.telefone1 = df.telefone1.astype(str)
-# df.data_inicio_atividades = df.data_inicio_atividades.astype(str)
+
+
 
 # df.info()
 # st.write(df.head(10)) 
