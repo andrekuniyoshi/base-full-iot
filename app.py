@@ -58,12 +58,12 @@ else:
 
 if filtro_capital_social == 'TODOS':
     pass
-elif filtro_capital_social == 'Mais de 1.000.0000':
+elif filtro_capital_social == 'Mais de 1.000.000':
     df_filtros = df_filtros[df_filtros.capital_social >= 1000000]
 elif filtro_capital_social == '100.000 a 1.000.000':
-    df_filtros = df_filtros[df_filtros.capital_social >= 100000]
+    df_filtros = df_filtros[(df_filtros.capital_social >= 100000) & (df_filtros.capital_social < 1000000)]
 elif filtro_capital_social == '1.000 a 100.000':
-    df_filtros = df_filtros[df_filtros.capital_social >= 1000]
+    df_filtros = df_filtros[(df_filtros.capital_social >= 1000) & (df_filtros.capital_social < 100000)]
 else:
     df_filtros = df_filtros[df_filtros.capital_social < 1000]
 
